@@ -6,12 +6,11 @@
   "author": "ratul <ratulsikder104@gmail.com>",
   "license": "MIT",
   "scripts": {
-    "serve": "vite .",
-    "build": "sass --style=compressed resources/assets/style/main.scss:public/style/main.css",
-    "watch": "sass  --style=compressed  --watch resources/assets/style:public/style"
+    "serve": "yarn run scss-watch",
+    "scss-build": "sass --style=compressed resources/assets/style/main.scss:public/style/main.css",
+    "scss-watch": "sass  --style=compressed  --watch resources/assets/style:public/style"
   },
   "devDependencies": {
-    "sass": "^1.58.3",
-    "terser": "^5.16.5"
+    "sass": "^1.58.3"
   }
 }
