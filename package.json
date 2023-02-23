@@ -1,0 +1,17 @@
+{
+  "name": "banner-generator",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": "https://github.com/RatulSikder97/banner-generator.git",
+  "author": "ratul <ratulsikder104@gmail.com>",
+  "license": "MIT",
+  "scripts": {
+    "serve": "vite .",
+    "build": "sass --style=compressed resources/assets/style/main.scss:public/style/main.css",
+    "watch": "sass  --style=compressed  --watch resources/assets/style:public/style"
+  },
+  "devDependencies": {
+    "sass": "^1.58.3",
+    "vite": "^4.1.4"
+  }
+}
