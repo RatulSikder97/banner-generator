@@ -11,5 +11,7 @@
             "email": "ratul.sikder@rokomari.com"
         }
     ],
-    "require": {}
+    "require": {
+        "guzzlehttp/guzzle": "^7.0"
+    }
 }

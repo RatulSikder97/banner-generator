@@ -5,7 +5,8 @@ namespace App\Controllers;
 class BannerController  {
 
     function index() {
-        echo "Welcome";
+        $name = "Tapu";
+        include "./resources/views/welcome.php";
     }
 }
 
