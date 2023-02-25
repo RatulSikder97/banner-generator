@@ -64,6 +64,66 @@ class BannerController  {
         return route('/banner/generated');
     }
 
+    function singleProductBannerNarrow() {
+        include "./resources/views/single-product-banner-narrow.php";
+    }
+
+
+    function generateSingleProductBannerNarrow() {
+        $productId = $_POST['productId'];
+
+        $productRes = HTTP_CLIENT->request('GET', 'https://ecommerce.rokomariapi.com/ecom/api/product/'.$productId, [
+            'headers' => [
+                'app_api_key' => 'lXwVZYyT9axBqFYjRDTKYIXynsi96cg70aAzsC8BB5P9q60cjK6JglnYJ9MkaQjB98aRClYNukwOYuqf236gata'
+            ]
+        ]);
+
+        if($product = json_decode($productRes->getBody())) {
+        
+
+            if($product->listPrice != $product->sellPrice) {
+                $productHtml = '<div class="rok-product-banner" style="max-width: 900px; margin: 20px auto;position:relative; background: #FFFBF1; border: 1px solid #F9DBB8; border-radius: 12px; padding: 14px 24px; display: flex;justify-content: start;align-items: center;">
+                                    <span style="color: #aaa; font-size:10px; position: absolute; right: 10px; bottom: -12px;"><i class="ion-information-circled" style="font-size: 10px;"></i> sponsored</span>
+                                
+                                    <a href="https://www.rokomari.com/book/'.$product->id.'">
+                                        <img src="'.$product->image.'" style="mix-blend-mode: multiply; width: 65px; margin: 0 30px;" alt="banner-image">
+                                    </a>
+                                
+                                    <div class="info" style="margin-left: 16px;">
+                                        <a href="https://www.rokomari.com/book/'.$product->id.'" style="text-decoration: none;color: #333;">
+                                            <p class="title" style="font-size: 18px;font-weight:700;margin-bottom: 5px; width:570px;white-space:nowrap;text-overflow:ellipsis;overflow:hidden;">'.$product->nameBangla.'</p>
+                                        </a>
+                                        <p class="title" style="font-style: 14px;color: #888;margin: 0;">by <span style="color: #0397d3 ;width: 480px;white-space:nowrap; overflow:hidden;text-overflow:ellipsis;">'.$product->authorNameBangla.'</span> </p>
+                                        <p class="price" style="font-weight: bold;font-size: 16px; margin-top: 10px;"><span class="mrp" style="color: #666;text-decoration: line-through; margin-right: 10px;">৳'.$product->listPrice.'</span> <span class="payable">৳'.$product->sellPrice.'</span></p>
+                                    </div>
+                                
+                                    <button class="btn  cart-btn js--add-to-cart" product-id="'.$product->id.'" style="color: #fff; height: auto; margin-left: auto; background: #ff9900; border:none; border-radius: 4px;padding: 8px 10px; font-size:18px;width:140px;cursor: pointer;">Add to Cart</button></div>';
+            } else {
+                $productHtml = '<div class="rok-product-banner" style="max-width: 900px; margin: 20px auto;position:relative; background: #FFFBF1; border: 1px solid #F9DBB8; border-radius: 12px; padding: 14px 24px; display: flex;justify-content: start;align-items: center;">
+                                    <span style="color: #aaa; font-size:10px; position: absolute; right: 10px; bottom: -12px;"><i class="ion-information-circled" style="font-size: 10px;"></i> sponsored</span>
+                                
+                                    <a href="https://www.rokomari.com/book/'.$product->id.'">
+                                        <img src="'.$product->image.'" style="mix-blend-mode: multiply; width: 65px; margin: 0 30px;" alt="banner-image">
+                                    </a>
+                                
+                                    <div class="info" style="margin-left: 16px;">
+                                        <a href="https://www.rokomari.com/book/'.$product->id.'" style="text-decoration: none;color: #333;">
+                                            <p class="title" style="font-size: 18px;font-weight:700;margin-bottom: 5px; max-width:510px;white-space:nowrap;text-overflow:ellipsis;overflow:hidden;">'.$product->nameBangla.'</p>
+                                        </a>
+                                        <p class="title" style="font-style: 14px;color: #888;margin: 0;">by <span style="color: #0397d3 ;width: 480px;white-space:nowrap; overflow:hidden;text-overflow:ellipsis;">'.$product->authorNameBangla.'</span> </p>
+                                        <p class="price" style="font-weight: bold;font-size: 16px; margin-top: 10px;"> <span class="payable">৳'.$product->sellPrice.'</span></p>
+                                    </div>
+                                
+                                    <button class="btn  cart-btn js--add-to-cart" product-id="'.$product->id.'" style="color: #fff; height: auto; margin-left: auto; border:none; border-radius: 4px;padding: 8px 10px; font-size:18px;width:140px;cursor: pointer;">Add to Cart</button></div>';
+            }
+            
+            
+            $_SESSION['banner'] = minifier($productHtml);
+        }
+
+        return route('/banner/generated');
+    }
+
 
     function generatedBanner() {
         include "./resources/views/generated-banner.php";

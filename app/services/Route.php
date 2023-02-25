@@ -15,12 +15,14 @@ $GLOBALS['routeGetControllerMapper'] =  [
     '/banner'=> [BannerController::class, 'index'],
     '/banner/image-banner'=>[BannerController::class, 'imageBanner'],
     '/banner/generated' => [BannerController::class, 'generatedBanner'],
-    '/banner/single-product' => [BannerController::class, 'singleProductBanner']
+    '/banner/single-product' => [BannerController::class, 'singleProductBanner'],
+    '/banner/single-product-narrow' => [BannerController::class, 'singleProductBannerNarrow'],
 ];
 
 $GLOBALS['routePostControllerMapper'] =  [
     '/banner/image-banner' => [BannerController::class, 'generateImageBanner'],
     '/banner/single-product' => [BannerController::class, 'generateSingleProductBanner'],
+    '/banner/single-product-narrow' => [BannerController::class, 'generateSingleProductBannerNarrow'],
 ];
 
 
