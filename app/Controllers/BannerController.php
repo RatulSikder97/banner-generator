@@ -125,6 +125,65 @@ class BannerController  {
     }
 
 
+    function singleProductBannerMobile() {
+        include "./resources/views/single-product-banner-mobile.php";
+    }
+
+
+    function generateSingleProductBannerMobile() {
+        $productId = $_POST['productId'];
+
+        $productRes = HTTP_CLIENT->request('GET', 'https://ecommerce.rokomariapi.com/ecom/api/product/'.$productId, [
+            'headers' => [
+                'app_api_key' => 'lXwVZYyT9axBqFYjRDTKYIXynsi96cg70aAzsC8BB5P9q60cjK6JglnYJ9MkaQjB98aRClYNukwOYuqf236gata'
+            ]
+        ]);
+
+        if($product = json_decode($productRes->getBody())) {
+            // image section
+            $imageSec = '<a href="https://www.rokomari.com/book/'.$product->id.'">
+                            <img src="'.$product->image.'" style="mix-blend-mode: multiply; width: 75px; margin: 20px auto;" alt="banner-image"> </a>';
+    
+            // rating calc
+            $starSection ="";
+            if($product->averageRating > 0) {
+    
+                $fullStar = (int) $product->averageRating;
+                $halfStar =  fmod($product->averageRating, 1) > 0 ? 1 : 0;
+                $emptyStar = 5 - $fullStar - $halfStar;
+                $starSection = str_repeat('<i class="ion-ios-star px-1"></i>',  $fullStar)
+                                .str_repeat('<i class="ion-ios-star-half px-1"></i>',  $halfStar)
+                                .str_repeat('<i class="ion-ios-star-outline px-1"></i>',  $emptyStar);
+            }
+    
+            $productInfo = '<a href="https://www.rokomari.com/book/'.$product->id.'"style="text-decoration: none;color: #333;">
+                                <p class="title" style="font-size: 16px;margin-bottom: 10px;">'.$product->nameBangla.'</p> </a>
+                            <p class="title" style="font-style: 12px;color: #888;margin: 0;">By: <span style="color: #0397d3">'.$product->authorNameBangla.'</span> </p>';
+            $productRating=' <div class="rating" style="color: #ff9900;">'.$starSection.'</div>';
+            if($product->listPrice > $product->sellPrice) {
+                $productPrice ='<p class="price" style="font-weight: bold;font-size: 16px; margin-top: 10px;"><span class="mrp" style="color: #666;text-decoration: line-through; margin-right: 10px;">TK. '.$product->listPrice.'</span> <span class="payable">TK. '.$product->sellPrice.'</span></p>';
+            } else {
+                $productPrice ='<p class="price" style="font-weight: bold;font-size: 16px; margin-top: 10px;"><span class="payable">TK. '.$product->sellPrice.'</span></p>';
+            }
+    
+            $productHtml = '<div class="rok-product-banner" style="max-width: 480px; width: 95%; margin: 16px auto;position:relative; background: linear-gradient(to bottom, #FFFBF1, #FFFBF1); border: 1px solid #F9DBB8; border-radius: 12px; padding: 15px; display: flex;justify-content: center; flex-direction:column; align-items: center; text-align: center;">
+            <span style="color: #aaa; font-size:10px; position: absolute; right: 10px; top: -12px;"><i class="ion-information-circled" style="font-size: 10px;"></i> sponsored</span>
+            '.$imageSec.'
+                <div class="info text-center">
+                '.$productInfo.'
+                '.$productRating.'
+                '. $productPrice.'
+                </div>
+    
+                <button class="btn js--add-to-cart" product-id="'.$product->id.'" style="margin: auto; margin-top: 16px; background: #ffc107; border:none; border-radius: 4px;padding: 8px 10px; font-size:14px;width:140px;cursor: pointer;" >Add to Cart</button>
+            </div>';
+    
+            $_SESSION['banner'] = minifier($productHtml);
+        }
+
+        return route('/banner/generated');
+    }
+
     function generatedBanner() {
         include "./resources/views/generated-banner.php";
     }
