@@ -12,7 +12,7 @@ $queryParams = parse_url($server['REQUEST_URI'])['query'];
 $GLOBALS['routeControllerMapper'] =  [
     '/' => [BannerController::class, 'index'],
     '/banner'=> [BannerController::class, 'index'],
-    '/banner/image-banner'=>[BannerController::class, 'index'],
+    '/banner/image-banner'=>[BannerController::class, 'imageBanner'],
 ];
 
 
