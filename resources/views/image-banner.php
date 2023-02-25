@@ -2,7 +2,7 @@
 
 <h3><?= $pageTitle ?></h3>
 
-<form action="./generate-image-banner.php" method="post">
+<form action="/banner/image-banner" method="post">
     <input type="hidden" name="bannerType" value="image">
     <div class="mb-3">
         <label for="banner-img-url" class="form-label">Banner Img Url <span class="text-danger">*</span></label>

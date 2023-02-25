@@ -12,8 +12,10 @@
 
 <body>
     <header>
-        <img src="https://www.rokomari.com/static/200/images/rokomari_logo.png" alt="">
-        <h2>Ads Generator</h2>
+        <a href="/">
+            <img src="https://www.rokomari.com/static/200/images/rokomari_logo.png" alt="">
+            <h2 class="mb-0">Ads Generator</h2>
+        </a>
     </header>
 
     <main>
