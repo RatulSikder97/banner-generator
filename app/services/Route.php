@@ -14,14 +14,22 @@ $GLOBALS['routeGetControllerMapper'] =  [
     '/' => [BannerController::class, 'index'],
     '/banner'=> [BannerController::class, 'index'],
     '/banner/image-banner'=>[BannerController::class, 'imageBanner'],
-    '/banner/generated' => [BannerController::class, 'generatedBanner']
+    '/banner/generated' => [BannerController::class, 'generatedBanner'],
+    '/banner/single-product' => [BannerController::class, 'singleProductBanner']
+];
+
+$GLOBALS['routePostControllerMapper'] =  [
+    '/banner/image-banner' => [BannerController::class, 'generateImageBanner'],
+    '/banner/single-product' => [BannerController::class, 'generateSingleProductBanner'],
 ];
 
 
 function postRoute($url) {
-    $singleton = new BannerController();
-
-    $singleton->generateImageBanner(); 
+    global $routePostControllerMapper;
+    $singleton = new $routePostControllerMapper[$url][0];
+    $singleton -> {$routePostControllerMapper[$url][1]}();
+    unset($singleton);
+    return;
 }
 
 function getRoute($url) {
